@@ -54,7 +54,7 @@ This repo includes a Render Blueprint in `render.yaml`.
 
 The blueprint creates:
 
-- `onrender-web`: Docker/Nginx frontend
+- `diplom`: Docker/Nginx frontend
 - `onrender-api`: Node backend
 - `onrender-db`: managed PostgreSQL database
 

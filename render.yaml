@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: onrender-web
+    name: diplom
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile.frontend
