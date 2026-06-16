@@ -9,11 +9,6 @@ services:
     envVars:
       - key: PORT
         value: "80"
-      - key: API_HOSTPORT
-        fromService:
-          type: web
-          name: onrender-api
-          property: hostport
 
   - type: web
     name: onrender-api

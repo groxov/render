@@ -65,7 +65,7 @@ Deployment flow:
 3. Render reads `render.yaml`, creates the services, and injects `DATABASE_URL` and `JWT_SECRET`.
 4. When Render asks for `ADMIN_PASSWORD`, enter a strong first-admin password.
 
-The frontend proxies `/api` and `/health` to the backend through Render private networking via `API_HOSTPORT`.
+The frontend is built with `VITE_API_URL=https://onrender-api.onrender.com/api` and talks to the public API service.
 The frontend container explicitly binds Nginx to port `80` with `PORT=80` in `render.yaml`.
 
 ## Production Docker Compose
