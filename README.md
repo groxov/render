@@ -63,6 +63,7 @@ Deployment flow:
 1. Push this folder to a GitHub/GitLab/Bitbucket repository.
 2. In Render, create a new Blueprint from that repository.
 3. Render reads `render.yaml`, creates the services, and injects `DATABASE_URL` and `JWT_SECRET`.
+4. When Render asks for `ADMIN_PASSWORD`, enter a strong first-admin password.
 
 The frontend proxies `/api` and `/health` to the backend through Render private networking via `API_HOSTPORT`.
 The frontend container explicitly binds Nginx to port `80` with `PORT=80` in `render.yaml`.

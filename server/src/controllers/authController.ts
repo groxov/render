@@ -15,7 +15,6 @@ interface RegisterPayload {
   email: string;
   password: string;
   name?: string;
-  user_type?: 'admin' | 'user';
 }
 
 export const login = asyncHandler(async (req, res) => {
@@ -39,7 +38,7 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const register = asyncHandler(async (req, res) => {
-  const { username, email, password, name, user_type } = req.body as RegisterPayload;
+  const { username, email, password, name } = req.body as RegisterPayload;
 
   const existingUser = await UserModel.findByUsernameOrEmail(username, email);
   if (existingUser) {
@@ -50,7 +49,7 @@ export const register = asyncHandler(async (req, res) => {
     username,
     email,
     password_hash: await bcrypt.hash(password, 10),
-    user_type: user_type ?? 'user',
+    user_type: 'user',
     name: name ?? null,
   });
 

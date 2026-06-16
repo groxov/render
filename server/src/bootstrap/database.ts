@@ -6,10 +6,10 @@ import { ensureDemoData } from './demoSeed';
 import { splitSqlStatements } from '../utils/sql';
 
 const DEFAULT_ADMIN = {
-  id: 'admin-001',
-  username: 'admin',
-  email: 'admin@kalakutsky-service.ru',
-  password: 'admin123',
+  id: process.env.ADMIN_ID || 'admin-001',
+  username: process.env.ADMIN_USERNAME || 'admin',
+  email: process.env.ADMIN_EMAIL || 'admin@kalakutsky-service.ru',
+  password: process.env.ADMIN_PASSWORD || (process.env.NODE_ENV === 'production' ? '' : 'admin123'),
   name: 'Administrator',
 } as const;
 
@@ -81,6 +81,11 @@ async function ensureSchemaUpgrades() {
 }
 
 async function ensureDefaultAdmin() {
+  if (!DEFAULT_ADMIN.password) {
+    console.log('Default admin creation skipped: ADMIN_PASSWORD is not set');
+    return;
+  }
+
   const existingAdmin = await dbGet<{ id: string }>('SELECT id FROM users WHERE username = ? LIMIT 1', [
     DEFAULT_ADMIN.username,
   ]);
@@ -105,7 +110,7 @@ async function ensureDefaultAdmin() {
     ],
   );
 
-  console.log('Default admin created (login: admin, password: admin123)');
+  console.log(`Default admin created (login: ${DEFAULT_ADMIN.username})`);
 }
 
 async function hasSqliteColumn(tableName: string, columnName: string) {

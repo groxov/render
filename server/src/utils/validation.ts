@@ -4,7 +4,6 @@ import { ApiError } from './http';
 
 const requestStatusSchema = z.enum(['new', 'in_progress', 'waiting_parts', 'completed', 'cancelled']);
 const prioritySchema = z.enum(['low', 'medium', 'high']);
-const userTypeSchema = z.enum(['admin', 'user']);
 const employeeStatusSchema = z.enum(['active', 'inactive']);
 const transactionTypeSchema = z.enum(['income', 'expense']);
 const inventoryStatusSchema = z.enum(['in_stock', 'low_stock', 'out_of_stock']);
@@ -96,7 +95,6 @@ const registerBodySchema = z.object({
   email: z.string().trim().email('Неверный формат email'),
   password: z.string().min(6, 'Пароль должен быть не короче 6 символов'),
   name: optionalString(),
-  user_type: userTypeSchema.optional(),
 });
 
 const requestsQuerySchema = z

@@ -19,10 +19,20 @@ export default defineConfig({
         entryFileNames: 'assets/app.js',
         chunkFileNames: 'assets/[name].js',
         assetFileNames: 'assets/[name][extname]',
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          motion: ['framer-motion'],
-          ui: ['lucide-react', 'react-countup'],
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react';
+          }
+
+          if (id.includes('node_modules/framer-motion')) {
+            return 'motion';
+          }
+
+          if (id.includes('node_modules/lucide-react') || id.includes('node_modules/react-countup')) {
+            return 'ui';
+          }
+
+          return undefined;
         },
       },
     },
