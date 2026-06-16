@@ -1,0 +1,12 @@
+node_modules
+build
+.git
+.gitignore
+.run-logs
+screenshots
+docs
+server/node_modules
+server/dist
+server/database/*.db
+server/database/*.db-*
+npm-debug.log*
