@@ -1,4 +1,4 @@
-import { dbGet, dbRun } from '../database/db';
+import { dbGet, dbRun, dbTransaction } from '../database/db';
 
 type EmployeeSeed = {
   id: string;
@@ -516,9 +516,7 @@ export async function ensureDemoData(options: SeedOptions = {}) {
     }));
   const transactions = [...supplementalTransactions, ...incomeTransactions];
 
-  await dbRun('BEGIN IMMEDIATE');
-
-  try {
+  await dbTransaction(async () => {
     for (const client of clients) {
       await dbRun(
         `
@@ -681,11 +679,7 @@ export async function ensureDemoData(options: SeedOptions = {}) {
       );
     }
 
-    await dbRun('COMMIT');
-  } catch (error) {
-    await dbRun('ROLLBACK');
-    throw error;
-  }
+  });
 
   return {
     seeded: true,
